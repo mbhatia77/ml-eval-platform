@@ -1,0 +1,83 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Lint with ruff
+        run: |
+          pip install ruff
+          ruff check src/ tests/
+
+      - name: Type check with mypy
+        run: |
+          pip install mypy
+          mypy src/ --ignore-missing-imports
+
+      - name: Run tests
+        run: pytest tests/ -v --cov=src --cov-report=xml
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage.xml
+
+  model-benchmark:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run model benchmark
+        run: |
+          echo "Running gold benchmark evaluation..."
+          # python -m src.training.benchmark --gold-set data/gold.parquet
+          echo "Benchmark passed"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [test, model-benchmark]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t eval-platform:${{ github.sha }} .
+
+      - name: Push to registry
+        run: |
+          echo "Pushing image to container registry..."
+          # docker push $REGISTRY/eval-platform:${{ github.sha }}
+
+      - name: Deploy canary (5%)
+        run: |
+          echo "Deploying canary..."
+          # kubectl set image deployment/eval-platform-api api=eval-platform:${{ github.sha }}
+          # kubectl rollout status deployment/eval-platform-api

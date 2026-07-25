@@ -1,0 +1,50 @@
+# Application Configuration
+# Override with environment variables prefixed with APP_, KAFKA_, REDIS_, etc.
+
+app:
+  name: ml-eval-platform
+  environment: development
+  debug: true
+  api_host: "0.0.0.0"
+  api_port: 8000
+  workers: 4
+
+kafka:
+  bootstrap_servers: "localhost:9092"
+  evaluation_topic: "evaluation-requests"
+  scoring_topic: "scoring-results"
+  feedback_topic: "feedback-events"
+  consumer_group: "eval-platform"
+  num_partitions: 32
+
+redis:
+  host: "localhost"
+  port: 6379
+  db: 0
+  feature_ttl_seconds: 86400
+
+database:
+  host: "localhost"
+  port: 5432
+  database: "eval_platform"
+  user: "eval_user"
+  pool_size: 20
+
+model:
+  tier2_model_path: "models/deberta-v3-eval"
+  tier2_xgboost_path: "models/xgboost-features"
+  tier3_provider: "openai"
+  tier3_model: "gpt-4"
+  tier3_max_tokens: 1024
+  tier3_temperature: 0.1
+  batch_size: 32
+  max_concurrent_llm_calls: 10
+
+thresholds:
+  pass_score_min: 75.0
+  pass_confidence_min: 0.9
+  reject_score_max: 30.0
+  reject_confidence_min: 0.9
+  review_confidence_max: 0.7
+  tier3_confidence_min: 0.7
+  tier3_confidence_max: 0.9

@@ -1,0 +1,45 @@
+You are an expert assessment question evaluator. Evaluate the following AI-generated question on each quality dimension.
+
+## Source Document
+{source_document}
+
+## Generated Question
+{question}
+
+## Expected Answer
+{expected_answer}
+
+## Evaluation Criteria
+Score each dimension from 0-100:
+
+1. **Correctness**: Is the question factually accurate based on the source?
+2. **Groundedness**: Is the question supported by the source document?
+3. **Relevance**: Is the question relevant to the document's main topics?
+4. **Difficulty**: Is the difficulty level appropriate (not too easy/hard)?
+5. **Clarity**: Is the question clear and unambiguous?
+6. **Completeness**: Does the question capture important information?
+7. **Non-duplication**: Is this a unique question (not repetitive)?
+8. **Hallucination**: Does the question contain fabricated information? (100=no hallucination)
+9. **Bias/Safety**: Is the question free from bias and safe? (100=no issues)
+10. **Grammar**: Is the question grammatically correct?
+
+## Output Format
+Respond with a JSON object:
+{
+  "overall_score": <0-100>,
+  "confidence": <0.0-1.0>,
+  "dimensions": {
+    "correctness": <score>,
+    "groundedness": <score>,
+    "relevance": <score>,
+    "difficulty": <score>,
+    "clarity": <score>,
+    "completeness": <score>,
+    "non_duplication": <score>,
+    "hallucination": <score>,
+    "bias_safety": <score>,
+    "grammar": <score>
+  },
+  "explanation": "<brief explanation of key findings>",
+  "recommendation": "pass|review|reject"
+}

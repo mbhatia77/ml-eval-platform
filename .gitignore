@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data & Models (managed by DVC)
+data/
+models/*.pt
+models/*.bin
+models/*.pkl
+*.parquet
+*.h5
+
+# Logs
+logs/
+*.log
+
+# Coverage
+.coverage
+htmlcov/
+coverage.xml
+
+# MLflow artifacts
+mlruns/
+
+# Docker
+.docker/
+
+# Temporary files
+tmp/
+temp/
