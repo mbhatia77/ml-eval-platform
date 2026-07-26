@@ -13,10 +13,10 @@ import logging
 from pathlib import Path
 from typing import AsyncIterator
 
-from src.utils.config import get_config
-from src.utils.models import EvaluationInput
 from src.evaluation.engine import EvaluationEngine
 from src.features.extractor import FeatureExtractor
+from src.utils.config import get_config
+from src.utils.models import EvaluationInput
 
 logger = logging.getLogger(__name__)
 

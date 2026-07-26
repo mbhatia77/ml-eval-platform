@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import uuid
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import evaluation, health, batch
+from src.api.routes import batch, evaluation, health
 from src.utils.config import get_config
 
 

@@ -121,7 +121,7 @@ class Tier1RuleEngine:
         # Check for blocklist patterns
         for pattern in self.BLOCKLIST_PATTERNS:
             if re.search(pattern, question):
-                failures.append(f"Contains blocklisted pattern")
+                failures.append("Contains blocklisted pattern")
                 score -= 40.0
                 break
 

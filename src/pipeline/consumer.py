@@ -7,15 +7,14 @@ and evaluation, then publishes results.
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
 from typing import Optional
 
-from src.utils.config import AppConfig, get_config
-from src.utils.models import EvaluationInput, QuestionMetadata
 from src.evaluation.engine import EvaluationEngine
 from src.features.extractor import FeatureExtractor
 from src.features.store import FeatureStore
+from src.utils.config import AppConfig, get_config
+from src.utils.models import EvaluationInput
 
 logger = logging.getLogger(__name__)
 

@@ -8,17 +8,14 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from typing import Optional
 
-import numpy as np
-
+from src.utils.config import ModelConfig
 from src.utils.models import (
     DimensionScore,
     EvaluationDimension,
     EvaluationInput,
     FeatureVector,
 )
-from src.utils.config import ModelConfig
 
 logger = logging.getLogger(__name__)
 

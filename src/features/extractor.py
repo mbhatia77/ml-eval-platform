@@ -6,9 +6,8 @@ for each question. Supports both real-time and batch computation.
 
 from __future__ import annotations
 
-import re
 import logging
-from typing import Optional
+import re
 
 from src.utils.models import EvaluationInput, FeatureVector
 

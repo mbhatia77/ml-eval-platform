@@ -11,13 +11,13 @@ import json
 import logging
 from dataclasses import dataclass, field
 
+from src.evaluation.tier2_ml import Tier2Result
+from src.utils.config import ModelConfig
 from src.utils.models import (
     DimensionScore,
     EvaluationDimension,
     EvaluationInput,
 )
-from src.utils.config import ModelConfig
-from src.evaluation.tier2_ml import Tier2Result
 
 logger = logging.getLogger(__name__)
 

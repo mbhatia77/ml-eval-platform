@@ -6,8 +6,8 @@ PASS, REVIEW, or REJECT based on scores and confidence.
 
 from __future__ import annotations
 
-from src.utils.models import Decision
 from src.utils.config import ThresholdConfig
+from src.utils.models import Decision
 
 
 class DecisionRouter:

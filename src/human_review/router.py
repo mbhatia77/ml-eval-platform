@@ -11,7 +11,6 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 from src.utils.models import (
-    Decision,
     EvaluationInput,
     EvaluationResult,
     HumanReviewTask,

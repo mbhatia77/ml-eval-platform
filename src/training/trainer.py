@@ -8,8 +8,6 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
-from pathlib import Path
-from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -70,7 +68,7 @@ class ModelTrainer:
         deberta_metrics = await self._train_deberta(train_data, val_data)
 
         # Step 3: Train XGBoost
-        xgboost_metrics = await self._train_xgboost(train_data, val_data)
+        await self._train_xgboost(train_data, val_data)
 
         # Step 4: Calibrate
         await self._calibrate(val_data)

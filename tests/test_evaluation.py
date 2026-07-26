@@ -1,18 +1,15 @@
 """Tests for the evaluation engine."""
 
-import pytest
+from src.evaluation.decision_router import DecisionRouter
+from src.evaluation.tier1_rules import Tier1RuleEngine
+from src.utils.config import ThresholdConfig
 from src.utils.models import (
     Decision,
-    EvaluationDimension,
+    DocumentType,
     EvaluationInput,
     FeatureVector,
     QuestionMetadata,
-    DocumentType,
 )
-from src.evaluation.tier1_rules import Tier1RuleEngine
-from src.evaluation.decision_router import DecisionRouter
-from src.utils.config import ThresholdConfig
-
 
 # --- Fixtures ---
 

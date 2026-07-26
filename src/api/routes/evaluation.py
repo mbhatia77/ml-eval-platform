@@ -3,14 +3,12 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime
 
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 
 from src.utils.models import (
     Decision,
-    EvaluationInput,
     EvaluationResult,
 )
 

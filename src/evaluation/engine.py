@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
-import time
 import logging
-from typing import Optional
+import time
 
+from src.evaluation.decision_router import DecisionRouter
+from src.evaluation.tier1_rules import Tier1RuleEngine
+from src.evaluation.tier2_ml import Tier2MLModel
+from src.evaluation.tier3_llm import Tier3LLMJudge
+from src.utils.config import AppConfig
 from src.utils.models import (
     Decision,
     DimensionScore,
@@ -13,11 +17,6 @@ from src.utils.models import (
     EvaluationResult,
     FeatureVector,
 )
-from src.utils.config import AppConfig
-from src.evaluation.tier1_rules import Tier1RuleEngine
-from src.evaluation.tier2_ml import Tier2MLModel
-from src.evaluation.tier3_llm import Tier3LLMJudge
-from src.evaluation.decision_router import DecisionRouter
 
 logger = logging.getLogger(__name__)
 

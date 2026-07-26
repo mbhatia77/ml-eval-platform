@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
-import json
 import logging
 from typing import Optional
 
-from src.utils.models import FeatureVector
 from src.utils.config import RedisConfig
+from src.utils.models import FeatureVector
 
 logger = logging.getLogger(__name__)
 
@@ -40,23 +39,20 @@ class FeatureStore:
 
     async def store(self, features: FeatureVector) -> None:
         """Store computed features in the online store."""
-        key = f"features:{features.evaluation_id}"
-        value = json.dumps({
-            "text_features": features.text_features,
-            "semantic_features": features.semantic_features,
-            "reference_features": features.reference_features,
-            "safety_features": features.safety_features,
-            "duplicate_features": features.duplicate_features,
-        })
-
         # In production:
+        # key = f"features:{features.evaluation_id}"
+        # value = json.dumps({
+        #     "text_features": features.text_features,
+        #     "semantic_features": features.semantic_features,
+        #     "reference_features": features.reference_features,
+        #     "safety_features": features.safety_features,
+        #     "duplicate_features": features.duplicate_features,
+        # })
         # await self.redis_client.setex(key, self.config.feature_ttl_seconds, value)
         logger.debug(f"Stored features for {features.evaluation_id}")
 
     async def get(self, evaluation_id: str) -> Optional[FeatureVector]:
         """Retrieve features from the online store."""
-        key = f"features:{evaluation_id}"
-
         # In production:
         # value = await self.redis_client.get(key)
         # if value is None:

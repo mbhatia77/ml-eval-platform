@@ -7,10 +7,8 @@ and prepares labeled data for model retraining.
 from __future__ import annotations
 
 import logging
-from datetime import datetime
-from typing import Optional
 
-from src.utils.models import Decision, HumanReviewResponse
+from src.utils.models import HumanReviewResponse
 
 logger = logging.getLogger(__name__)
 

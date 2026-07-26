@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import uuid
 
-from fastapi import APIRouter, HTTPException, UploadFile, File, status
+from fastapi import APIRouter, status
 from pydantic import BaseModel
 
 router = APIRouter()
