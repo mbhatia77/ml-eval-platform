@@ -1,0 +1,11 @@
+---
+description: Python coding standards for the ML eval platform
+alwaysApply: true
+---
+
+# Python conventions
+
+- Prefer small, focused modules under `src/`
+- Keep evaluation logic in `src/evaluation/`; do not mix API routing into it
+- Add tests next to the behavior in `tests/`
+- Do not commit secrets, `.env`, or credentials
