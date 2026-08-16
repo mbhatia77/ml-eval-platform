@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "hooks": {
+    "postToolUse": [
+      {
+        "command": ".cursor/hooks/require-tests.py",
+        "matcher": "Write",
+        "timeout": 10
+      }
+    ]
+  }
+}
