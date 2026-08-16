@@ -24,8 +24,8 @@ graph TB
 
     subgraph Routes["src/api/routes"]
         RH["health.py<br/>GET /health<br/>GET /health/ready"]
-        RE["evaluation.py<br/>POST /api/v1/evaluate<br/>GET /api/v1/evaluate/{id}<br/>POST /api/v1/evaluate/sync"]
-        RB["batch.py<br/>POST /api/v1/batch/evaluate<br/>GET /api/v1/batch/{id}"]
+        RE["evaluation.py<br/>POST /api/v1/evaluate<br/>GET /api/v1/evaluate/:evaluation_id<br/>POST /api/v1/evaluate/sync"]
+        RB["batch.py<br/>POST /api/v1/batch/evaluate<br/>GET /api/v1/batch/:batch_id"]
     end
 
     subgraph Features["src/features"]
@@ -80,7 +80,7 @@ graph TB
     ENG --> T2
     ENG --> T3
     ENG --> DR
-    T3 --> T2
+    T3 -->|"imports Tier2Result as input type"| T2
 
     CFG --> ENG
     CFG --> T2
@@ -102,7 +102,6 @@ graph TB
     HRR -.->|"XADD review-queue, commented out"| REDIS
     HRF -.->|"INSERT reviews, pass"| PG
     TRN -.->|"register_model, commented out"| MLF
-    MET -.->|"prometheus_client not imported"| PG
 
     classDef entry fill:#e8f5e9,stroke:#1b5e20
     classDef route fill:#e1f5fe,stroke:#01579b
@@ -174,6 +173,27 @@ Two behaviours worth knowing when reading this flow:
 - **`decide` has no distinct borderline branch.** The last two conditions in
   `DecisionRouter.decide` both return `REVIEW`, so REVIEW is effectively the default for
   anything that is not a confident pass or a confident reject.
+
+### Tier 3 is unreachable while Tier 2 is stubbed
+
+Confirmed by running the batch pipeline. `Tier2MLModel._run_deberta` returns a constant `75.0`
+and `_run_xgboost` returns a constant `70.0` for every dimension, so the agreement-based
+confidence is fixed:
+
+```
+agreement  = 1.0 - |75 - 70| / 100          = 0.95
+confidence = min(0.95, 0.95 * 0.9 + 0.1)    = 0.95
+```
+
+`0.95` sits above the escalation ceiling of `0.9`, so `needs_escalation` is always false and
+`Tier3LLMJudge` never runs. The blended score is likewise fixed at `72.87`, which is below
+`pass_score_min` of `75.0`. Net effect in placeholder mode: every question that clears Tier 1
+returns `REVIEW` at `tier_used = 2`, and both the Tier 3 path and the PASS branch are dead
+until a real Tier 2 model produces varying confidence.
+
+Observed on a two-question sample: a well-formed question returned
+`score=72.87, confidence=0.95, decision=review, tier_used=2`; a question missing its question
+mark returned `score=30.0, decision=reject, tier_used=1`.
 
 ---
 
@@ -255,8 +275,6 @@ graph TB
     PROM --> REDIS
     PROM --> GRAF
     PROM --> ALERTS
-
-    API -->|"probes /health and /health/ready"| API
 
     classDef app fill:#e8f5e9,stroke:#1b5e20
     classDef data fill:#fff3e0,stroke:#e65100

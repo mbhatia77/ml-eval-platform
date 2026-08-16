@@ -20,7 +20,8 @@ ml-eval-platform/
 ├── docs/                    # Design documents and specs
 │   └── design-document.md   # Interview-style ML system design
 ├── diagrams/                # Architecture and sequence diagrams
-│   ├── system-architecture.md
+│   ├── system-architecture.md   # Target production design
+│   ├── code-architecture.md     # As-implemented modules and call graph
 │   └── sequence-diagram.md
 ├── src/                     # Source code
 │   ├── api/                 # REST API layer
@@ -66,7 +67,7 @@ pytest tests/
 
 ## Architecture
 
-See [System Architecture](diagrams/system-architecture.md) and [Sequence Diagram](diagrams/sequence-diagram.md) for detailed visual representations.
+See [System Architecture](diagrams/system-architecture.md) and [Sequence Diagram](diagrams/sequence-diagram.md) for the target production design, and [Code Architecture](diagrams/code-architecture.md) for the as-implemented module structure, call graph, and current stub boundaries.
 
 ## Design Document
 
