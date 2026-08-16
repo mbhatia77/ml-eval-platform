@@ -1,0 +1,11 @@
+---
+description: Decision router and evaluation pipeline conventions
+globs: src/evaluation/**/*.py
+alwaysApply: false
+---
+
+# Evaluation
+
+- Keep routing decisions deterministic and easy to unit test
+- Do not call external services from `decision_router.py`
+- Prefer explicit return types over implicit dicts
