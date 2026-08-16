@@ -26,6 +26,8 @@ graph TB
         RH["health.py<br/>GET /health<br/>GET /health/ready"]
         RE["evaluation.py<br/>POST /api/v1/evaluate<br/>GET /api/v1/evaluate/:evaluation_id<br/>POST /api/v1/evaluate/sync"]
         RB["batch.py<br/>POST /api/v1/batch/evaluate<br/>GET /api/v1/batch/:batch_id"]
+        RE["evaluation.py<br/>POST /api/v1/evaluate<br/>GET /api/v1/evaluate/{id}<br/>POST /api/v1/evaluate/sync"]
+        RB["batch.py<br/>POST /api/v1/batch/evaluate<br/>GET /api/v1/batch/{id}"]
     end
 
     subgraph Features["src/features"]
@@ -81,6 +83,7 @@ graph TB
     ENG --> T3
     ENG --> DR
     T3 -->|"imports Tier2Result as input type"| T2
+    T3 --> T2
 
     CFG --> ENG
     CFG --> T2
@@ -275,6 +278,8 @@ graph TB
     PROM --> REDIS
     PROM --> GRAF
     PROM --> ALERTS
+
+    API -->|"probes /health and /health/ready"| API
 
     classDef app fill:#e8f5e9,stroke:#1b5e20
     classDef data fill:#fff3e0,stroke:#e65100
