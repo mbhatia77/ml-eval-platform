@@ -60,6 +60,7 @@ class DecisionRouter:
 
     def needs_escalation(self, score: float, confidence: float) -> bool:
         """
+   
         Determine if a Tier 2 result needs Tier 3 (LLM) escalation.
 
         Escalation happens when confidence is in the "uncertain" range,
