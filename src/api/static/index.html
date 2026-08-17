@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ML Evaluation Platform</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <p class="eyebrow">ML Evaluation Platform</p>
+      <h1>Score generated assessment questions automatically</h1>
+      <p class="lede">
+        Tiered rules, ML, and LLM judging with confidence-based routing to
+        human review. Pass, review, or reject — without a manual queue for
+        every question.
+      </p>
+    </header>
+
+    <main>
+      <section class="pricing" aria-labelledby="pricing-heading">
+        <h2 id="pricing-heading">Pricing</h2>
+        <p class="section-note">Monthly plans. Apply a discount code before you start.</p>
+
+        <div class="plans">
+          <article class="plan" data-plan="starter">
+            <h3>Starter</h3>
+            <p class="price">
+              <span class="price-value" data-base="49" id="price-starter">$49</span>
+              <span class="period">/ month</span>
+            </p>
+            <ul>
+              <li>Up to 50k evaluations / month</li>
+              <li>Tier 1 + Tier 2 scoring</li>
+              <li>API access</li>
+            </ul>
+          </article>
+
+          <article class="plan plan-featured" data-plan="pro">
+            <h3>Pro</h3>
+            <p class="price">
+              <span class="price-value" data-base="149" id="price-pro">$149</span>
+              <span class="period">/ month</span>
+            </p>
+            <ul>
+              <li>Up to 500k evaluations / month</li>
+              <li>Full three-tier pipeline</li>
+              <li>Human-review routing</li>
+            </ul>
+          </article>
+        </div>
+
+        <form id="discount-form" class="discount-form">
+          <label for="discount-code">Discount code</label>
+          <div class="discount-row">
+            <input
+              id="discount-code"
+              name="code"
+              type="text"
+              autocomplete="off"
+              placeholder="LAUNCH20"
+              required
+            />
+            <input
+              id="discount-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="Email (optional)"
+            />
+            <button type="submit">Apply</button>
+          </div>
+          <p id="discount-message" class="discount-message" role="status"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="/static/landing.js"></script>
+  </body>
+</html>

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from pydantic import Field
 from pydantic_settings import BaseSettings
 
 
@@ -72,6 +73,17 @@ class ThresholdConfig(BaseSettings):
         env_prefix = "THRESHOLD_"
 
 
+class DiscountConfig(BaseSettings):
+    """Public discount-code allowlist for the landing page."""
+
+    codes: dict[str, int] = Field(
+        default_factory=lambda: {"LAUNCH20": 20, "EVAL50": 50}
+    )
+
+    class Config:
+        env_prefix = "DISCOUNT_"
+
+
 class AppConfig(BaseSettings):
     """Top-level application configuration."""
     app_name: str = "ml-eval-platform"
@@ -86,6 +98,7 @@ class AppConfig(BaseSettings):
     database: DatabaseConfig = DatabaseConfig()
     model: ModelConfig = ModelConfig()
     thresholds: ThresholdConfig = ThresholdConfig()
+    discount: DiscountConfig = DiscountConfig()
 
     class Config:
         env_prefix = "APP_"
