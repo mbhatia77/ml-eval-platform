@@ -136,3 +136,30 @@ class TestEvaluateSync:
         assert body["confidence"] == 0.85
         assert body["decision"] == "pass"
         assert body["tier_used"] == 2
+
+
+# --- Evaluator documentation pages ---
+
+
+class TestDocsPages:
+    """Test dedicated documentation pages for each evaluator."""
+
+    @pytest.mark.parametrize(
+        ("path", "heading"),
+        [
+            ("/docs", "Evaluator models"),
+            ("/docs/tier-1-rules", "Tier 1 rule engine"),
+            ("/docs/tier-2-ml", "Tier 2 ML ensemble"),
+            ("/docs/tier-3-llm", "Tier 3 LLM judge"),
+        ],
+    )
+    def test_docs_page_ok(self, client: TestClient, path: str, heading: str):
+        response = client.get(path)
+        assert response.status_code == 200
+        assert "text/html" in response.headers["content-type"]
+        assert heading in response.text
+
+    def test_landing_links_to_docs(self, client: TestClient):
+        response = client.get("/")
+        assert response.status_code == 200
+        assert 'href="/docs"' in response.text

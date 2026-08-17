@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Models — ML Evaluation Platform</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/">Home</a>
+      <a href="/docs" class="is-current">Docs</a>
+      <a href="/docs/tier-1-rules">Tier 1</a>
+      <a href="/docs/tier-2-ml">Tier 2</a>
+      <a href="/docs/tier-3-llm">Tier 3</a>
+    </nav>
+
+    <header class="hero">
+      <p class="eyebrow">Documentation</p>
+      <h1>Evaluator models</h1>
+      <p class="lede">
+        The pipeline scores a question with cheap rules first, then an ML
+        ensemble, then an LLM only when confidence is uncertain.
+      </p>
+    </header>
+
+    <main class="docs">
+      <div class="docs-grid">
+        <a class="docs-card" href="/docs/tier-1-rules">
+          <h2>Tier 1</h2>
+          <p>Rule-based checks. Immediate reject for obvious failures. Fully implemented.</p>
+        </a>
+        <a class="docs-card" href="/docs/tier-2-ml">
+          <h2>Tier 2</h2>
+          <p>DeBERTa + XGBoost ensemble. Weighting is real; inference is still stubbed.</p>
+        </a>
+        <a class="docs-card" href="/docs/tier-3-llm">
+          <h2>Tier 3</h2>
+          <p>LLM-as-judge for the 0.7–0.9 confidence band. Prompt and parse are real; the API call is canned.</p>
+        </a>
+      </div>
+    </main>
+  </body>
+</html>

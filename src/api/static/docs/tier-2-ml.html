@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tier 2 ML — ML Evaluation Platform</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/">Home</a>
+      <a href="/docs">Docs</a>
+      <a href="/docs/tier-1-rules">Tier 1</a>
+      <a href="/docs/tier-2-ml" class="is-current">Tier 2</a>
+      <a href="/docs/tier-3-llm">Tier 3</a>
+    </nav>
+
+    <header class="hero">
+      <p class="eyebrow">src/evaluation/tier2_ml.py</p>
+      <h1>Tier 2 ML ensemble</h1>
+      <p class="lede">
+        DeBERTa + XGBoost scoring across the ten quality dimensions. Target
+        latency is under 50ms once real models are loaded.
+      </p>
+    </header>
+
+    <main class="docs">
+      <p class="status-note">
+        Status: ensemble weights and confidence math are real. Inference is
+        stubbed — DeBERTa returns <code>75.0</code> and XGBoost returns
+        <code>70.0</code> for every dimension, so confidence stays about
+        <code>0.95</code> and Tier 3 never runs.
+      </p>
+
+      <h2>When it runs</h2>
+      <p>
+        After Tier 1 accepts the question. The engine then asks
+        <code>DecisionRouter.needs_escalation</code> whether to call Tier 3.
+      </p>
+
+      <h2>Inputs and outputs</h2>
+      <ul>
+        <li>Input: <code>EvaluationInput</code> and <code>FeatureVector</code></li>
+        <li>Output: <code>Tier2Result</code> with a quality score, confidence, dimension scores, and an explanation</li>
+      </ul>
+
+      <h2>Scoring</h2>
+      <ul>
+        <li>Semantic dimensions (correctness, groundedness, relevance, hallucination, completeness): DeBERTa 0.7 / XGBoost 0.3</li>
+        <li>Surface dimensions (the rest): DeBERTa 0.4 / XGBoost 0.6</li>
+        <li>Per-dimension confidence from score agreement: <code>1 − |deberta − xgboost| / 100</code></li>
+        <li>Overall quality score is a weighted average; correctness, groundedness, hallucination, and bias/safety weigh most</li>
+      </ul>
+
+      <h2>Config</h2>
+      <ul>
+        <li><code>MODEL_TIER2_MODEL_PATH</code> — default <code>models/deberta-v3-eval</code></li>
+        <li><code>MODEL_TIER2_XGBOOST_PATH</code> — default <code>models/xgboost-features</code></li>
+        <li><code>THRESHOLD_TIER3_CONFIDENCE_MIN</code> / <code>MAX</code> — default <code>0.7</code> and <code>0.9</code></li>
+      </ul>
+    </main>
+  </body>
+</html>
