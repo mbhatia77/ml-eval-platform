@@ -32,6 +32,8 @@ app = FastAPI(
     description="Automated quality evaluation for AI-generated assessment questions",
     version="0.1.0",
     lifespan=lifespan,
+    docs_url="/api/docs",
+    redoc_url="/api/redoc",
 )
 
 app.add_middleware(
@@ -52,6 +54,30 @@ app.include_router(discount.router, prefix="/api/v1", tags=["discount"])
 async def landing_page():
     """Serve the product landing page."""
     return FileResponse(STATIC_DIR / "index.html")
+
+
+@app.get("/docs", include_in_schema=False)
+async def docs_index():
+    """Serve the evaluator documentation index."""
+    return FileResponse(STATIC_DIR / "docs" / "index.html")
+
+
+@app.get("/docs/tier-1-rules", include_in_schema=False)
+async def docs_tier1():
+    """Serve Tier 1 rule-engine documentation."""
+    return FileResponse(STATIC_DIR / "docs" / "tier-1-rules.html")
+
+
+@app.get("/docs/tier-2-ml", include_in_schema=False)
+async def docs_tier2():
+    """Serve Tier 2 ML ensemble documentation."""
+    return FileResponse(STATIC_DIR / "docs" / "tier-2-ml.html")
+
+
+@app.get("/docs/tier-3-llm", include_in_schema=False)
+async def docs_tier3():
+    """Serve Tier 3 LLM-judge documentation."""
+    return FileResponse(STATIC_DIR / "docs" / "tier-3-llm.html")
 
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")

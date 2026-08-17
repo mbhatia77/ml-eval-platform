@@ -152,8 +152,109 @@ button:hover {
   color: var(--ok);
 }
 
+.site-nav {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 20px 24px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-size: 14px;
+}
+
+.site-nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.site-nav a:hover,
+.site-nav a.is-current {
+  color: var(--accent);
+}
+
+.hero-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hero-link:hover {
+  color: var(--accent-hover);
+}
+
+.docs {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 32px 24px 72px;
+}
+
+.docs h1 {
+  font-size: 32px;
+}
+
+.docs h2 {
+  margin-top: 28px;
+}
+
+.docs p,
+.docs li {
+  color: var(--muted);
+}
+
+.docs code {
+  font-size: 0.92em;
+  background: #efece6;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.status-note {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  color: var(--text);
+}
+
+.docs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin: 28px 0 0;
+}
+
+.docs-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.docs-card:hover {
+  border-color: var(--accent);
+}
+
+.docs-card h2 {
+  margin-top: 0;
+  color: var(--text);
+}
+
+.docs-card p {
+  margin: 0;
+}
+
 @media (max-width: 640px) {
   .plans {
+    grid-template-columns: 1fr;
+  }
+
+  .docs-grid {
     grid-template-columns: 1fr;
   }
 

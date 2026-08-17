@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tier 1 Rules — ML Evaluation Platform</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/">Home</a>
+      <a href="/docs">Docs</a>
+      <a href="/docs/tier-1-rules" class="is-current">Tier 1</a>
+      <a href="/docs/tier-2-ml">Tier 2</a>
+      <a href="/docs/tier-3-llm">Tier 3</a>
+    </nav>
+
+    <header class="hero">
+      <p class="eyebrow">src/evaluation/tier1_rules.py</p>
+      <h1>Tier 1 rule engine</h1>
+      <p class="lede">
+        Deterministic checks that catch obvious quality failures without model
+        inference. Target latency is under 10ms.
+      </p>
+    </header>
+
+    <main class="docs">
+      <p class="status-note">
+        Status: fully implemented. Any rule failure returns <code>REJECT</code>
+        immediately and skips Tier 2 and Tier 3.
+      </p>
+
+      <h2>When it runs</h2>
+      <p>
+        First step in <code>EvaluationEngine.evaluate</code>. If
+        <code>Tier1Result.is_rejected</code> is true, the engine hardcodes
+        confidence <code>0.95</code> and returns <code>Decision.REJECT</code>.
+      </p>
+
+      <h2>Inputs and outputs</h2>
+      <ul>
+        <li>Input: <code>EvaluationInput</code> and <code>FeatureVector</code></li>
+        <li>Output: <code>Tier1Result</code> with per-dimension scores, a quality score, and an explanation</li>
+      </ul>
+
+      <h2>Checks</h2>
+      <ul>
+        <li>Format: question must end with <code>?</code>; blocklist tokens such as <code>TODO</code> or <code>placeholder</code></li>
+        <li>Length: question 15–500 characters; answer at least 5 characters</li>
+        <li>Verbatim copy: question text (minus <code>?</code>) longer than 30 characters and present in the source</li>
+        <li>Safety: blocklist patterns that pair harm/weapon/illegal/hack language with how/instructions/steps</li>
+      </ul>
+
+      <h2>Config</h2>
+      <p>
+        No environment knobs. Length and blocklist constants live on
+        <code>Tier1RuleEngine</code>. Downstream pass/reject cutoffs are
+        <code>THRESHOLD_*</code> and apply only after Tier 1 passes.
+      </p>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tier 3 LLM — ML Evaluation Platform</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/">Home</a>
+      <a href="/docs">Docs</a>
+      <a href="/docs/tier-1-rules">Tier 1</a>
+      <a href="/docs/tier-2-ml">Tier 2</a>
+      <a href="/docs/tier-3-llm" class="is-current">Tier 3</a>
+    </nav>
+
+    <header class="hero">
+      <p class="eyebrow">src/evaluation/tier3_llm.py</p>
+      <h1>Tier 3 LLM judge</h1>
+      <p class="lede">
+        LLM-as-judge for cases where Tier 2 confidence is in the uncertain
+        band. The engine blends scores 0.3 Tier 2 / 0.7 Tier 3.
+      </p>
+    </header>
+
+    <main class="docs">
+      <p class="status-note">
+        Status: prompt construction and JSON parsing are implemented. The LLM
+        API call returns canned JSON (overall score 65, confidence 0.82).
+        Escalation is a middle band, not a floor — confidence below 0.7 goes
+        straight to <code>REVIEW</code> without calling the LLM.
+      </p>
+
+      <h2>When it runs</h2>
+      <p>
+        Only when <code>DecisionRouter.needs_escalation</code> is true:
+        <code>THRESHOLD_TIER3_CONFIDENCE_MIN ≤ confidence &lt; THRESHOLD_TIER3_CONFIDENCE_MAX</code>
+        (defaults 0.7 and 0.9). With stubbed Tier 2 confidence of 0.95, this
+        path is currently unreachable.
+      </p>
+
+      <h2>Inputs and outputs</h2>
+      <ul>
+        <li>Input: <code>EvaluationInput</code> and the <code>Tier2Result</code></li>
+        <li>Output: <code>Tier3Result</code> with overall score, confidence, dimension scores, and an explanation</li>
+        <li>The engine keeps the Tier 3 explanation and dimension scores, and takes <code>max</code> of the two confidences</li>
+      </ul>
+
+      <h2>Prompt</h2>
+      <p>
+        The judge receives the source (truncated to 3000 characters), the
+        generated question, the expected answer, and Tier 2 dimension scores.
+        It is asked for JSON with an overall score, confidence, ten dimension
+        scores, an explanation, and a pass/review/reject recommendation.
+      </p>
+
+      <h2>Config</h2>
+      <ul>
+        <li><code>MODEL_TIER3_PROVIDER</code> — default <code>openai</code></li>
+        <li><code>MODEL_TIER3_MODEL</code> — default <code>gpt-4</code></li>
+        <li><code>MODEL_TIER3_MAX_TOKENS</code> — default <code>1024</code></li>
+        <li><code>MODEL_TIER3_TEMPERATURE</code> — default <code>0.1</code></li>
+        <li><code>THRESHOLD_TIER3_CONFIDENCE_MIN</code> / <code>MAX</code> — default <code>0.7</code> / <code>0.9</code></li>
+      </ul>
+    </main>
+  </body>
+</html>
