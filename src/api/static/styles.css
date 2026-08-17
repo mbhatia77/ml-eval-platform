@@ -1,0 +1,163 @@
+:root {
+  color-scheme: light;
+  --bg: #f7f6f3;
+  --surface: #ffffff;
+  --text: #1b1b18;
+  --muted: #5c5c56;
+  --line: #ddd9d0;
+  --accent: #1f4e3d;
+  --accent-hover: #16382c;
+  --danger: #8a1f1f;
+  --ok: #1f4e3d;
+  --radius: 10px;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.hero,
+.pricing {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 24px 0;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
+h1 {
+  font-size: 36px;
+  line-height: 1.2;
+  margin: 0 0 16px;
+  font-weight: 600;
+}
+
+h2,
+h3 {
+  margin: 0 0 8px;
+}
+
+.lede,
+.section-note {
+  color: var(--muted);
+  max-width: 620px;
+}
+
+.pricing {
+  padding-bottom: 72px;
+}
+
+.plans {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 28px 0 32px;
+}
+
+.plan {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.plan-featured {
+  border-color: var(--accent);
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 12px 0 16px;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.period {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.plan ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.discount-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.discount-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+input,
+button {
+  font: inherit;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  padding: 10px 12px;
+}
+
+input {
+  background: var(--surface);
+  min-width: 160px;
+  flex: 1;
+}
+
+button {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover {
+  background: var(--accent-hover);
+}
+
+.discount-message {
+  min-height: 1.5em;
+  margin: 10px 0 0;
+  font-size: 14px;
+}
+
+.discount-message.error {
+  color: var(--danger);
+}
+
+.discount-message.success {
+  color: var(--ok);
+}
+
+@media (max-width: 640px) {
+  .plans {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+}

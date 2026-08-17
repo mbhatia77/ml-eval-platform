@@ -3,12 +3,17 @@
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
-from src.api.routes import batch, evaluation, health
+from src.api.routes import batch, discount, evaluation, health
 from src.utils.config import get_config
+
+STATIC_DIR = Path(__file__).parent / "static"
 
 
 @asynccontextmanager
@@ -40,6 +45,16 @@ app.add_middleware(
 app.include_router(health.router, tags=["health"])
 app.include_router(evaluation.router, prefix="/api/v1", tags=["evaluation"])
 app.include_router(batch.router, prefix="/api/v1", tags=["batch"])
+app.include_router(discount.router, prefix="/api/v1", tags=["discount"])
+
+
+@app.get("/", include_in_schema=False)
+async def landing_page():
+    """Serve the product landing page."""
+    return FileResponse(STATIC_DIR / "index.html")
+
+
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
 if __name__ == "__main__":
